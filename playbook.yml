@@ -1,0 +1,7 @@
+- name: install nginx
+  hosts: all
+  user: ubuntu
+  become: true
+
+  roles:
+    - role: nginx

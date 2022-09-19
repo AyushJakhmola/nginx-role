@@ -1,0 +1,21 @@
+---
+# tasks file for nginx
+- name: install the nginx package
+  ansible.builtin.package:
+    name: "{{ WebServer }}"
+    state: latest
+- name: Copy files for webserver
+  ansible.builtin.copy:
+    src: /files/index.html
+    dest: /var/www/html/
+    owner: www-data
+    group: www-data
+    mode: '0644'
+- name: copy nginx configuration file
+  ansible.builtin.template:
+    src: /templates/nginxConf.j2
+    dest: /etc/nginx/sites-available/nginx.conf
+    owner: www-data
+    group: www-data
+    mode: '0644'
+  notify: restart_nginx
